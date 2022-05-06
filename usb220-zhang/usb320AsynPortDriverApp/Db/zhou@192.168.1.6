@@ -1,0 +1,946 @@
+###################################################################
+#  This record is used to get normal data                         #
+###################################################################
+record(ao, "$(P)$(R)SerialNumber0")
+{
+    field(DESC, "Get Serial Number0")
+    field(DTYP, "asynFloat64")
+    field(OUT,  "@asyn($(PORT),$(ADDR))SERIAL_NUMBER_0")
+}
+record(ai, "$(P)$(R)SerialNumber0_RBV")
+{
+    field(DESC, "Get Serial Number0")
+    field(PINI, "1")
+    field(DTYP, "asynFloat64")
+    field(EGU, "FUTEK1")
+#    field(PREC, "3")
+    field(INP,  "@asyn($(PORT),$(ADDR))SERIAL_NUMBER_0")
+    field(SCAN, "I/O Intr")
+#    field(SCAN, "1 second")
+}
+
+record(ao, "$(P)$(R)NormalData0")
+{
+    field(DESC, "Get the latest ADC value") 
+    field(DTYP, "asynFloat64")
+    field(OUT,  "@asyn($(PORT),$(ADDR))NORMAL_DATA_0")
+}
+record(ai, "$(P)$(R)NormalData0_RBV")
+{
+    field(DESC, "Get the latest ADC value") 
+    field(PINI, "1")
+    field(DTYP, "asynFloat64")
+    field(EGU, "g")
+    field(PREC, "3")
+    field(INP,  "@asyn($(PORT),$(ADDR))NORMAL_DATA_0")
+    field(SCAN, "I/O Intr")
+#    field(SCAN, "1 second")
+}
+
+###################################################################
+##  This record is used to get offset value                       #
+####################################################################
+record(ao, "$(P)$(R)OffsetValue0")
+{
+   field(PINI, "1")
+   field(DTYP, "asynFloat64")
+   field(OUT,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))OFFSET_VALUE_0")
+}
+
+record(ai, "$(P)$(R)OffsetValue0_RBV")
+{
+   field(PINI, "1")
+   field(DTYP, "asynFloat64")
+   field(INP,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))OFFSET_VALUE_0")
+   field(SCAN, "I/O Intr")
+}
+
+record(ao, "$(P)$(R)FullscaleValue0")
+{
+   field(PINI, "1")
+   field(DTYP, "asynFloat64")
+   field(OUT,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))FULLSCALE_VALUE_0")
+}
+
+record(ai, "$(P)$(R)FullscaleValue0_RBV")
+{
+   field(PINI, "1")
+   field(DTYP, "asynFloat64")
+   field(INP,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))FULLSCALE_VALUE_0")
+   field(SCAN, "I/O Intr")
+}
+
+record(ao, "$(P)$(R)FullscaleLoad0")
+{
+   field(PINI, "1")
+   field(DTYP, "asynFloat64")
+   field(OUT,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))FULLSCALE_LOAD_0")
+}
+
+record(ai, "$(P)$(R)FullscaleLoad0_RBV")
+{
+   field(PINI, "1")
+   field(DTYP, "asynFloat64")
+   field(INP,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))FULLSCALE_LOAD_0")
+   field(SCAN, "I/O Intr")
+}
+
+record(ao, "$(P)$(R)DecimalPoint0")
+{
+   field(PINI, "1")
+   field(DTYP, "asynFloat64")
+   field(OUT,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))DECIMAL_POINT_0")
+}
+
+record(ai, "$(P)$(R)DecimalPoint0_RBV")
+{
+   field(PINI, "1")
+   field(DTYP, "asynFloat64")
+   field(INP,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))DECIMAL_POINT_0")
+   field(PREC, "3")
+   field(SCAN, "I/O Intr")
+}
+
+record(ao, "$(P)$(R)UpdateTime")
+{
+   field(PINI, "1")
+   field(DTYP, "asynFloat64")
+   field(OUT,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))UPDATE_TIME")
+   field(PREC, "3")
+}
+
+record(ai, "$(P)$(R)UpdateTime_RBV")
+{
+   field(PINI, "1")
+   field(DTYP, "asynFloat64")
+   field(INP,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))UPDATE_TIME")
+   field(PREC, "3")
+   field(SCAN, "I/O Intr")
+}
+
+record(ai, "$(P)$(R)PressureValue0_RBV")
+{
+#   field(PINI, "1")
+   field(DTYP, "asynFloat64")
+   field(INP,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))PRESSURE_0")
+   field(PREC, "3")
+   field(EGU , "lbf")
+   field(SCAN, "I/O Intr")
+   field(FLNK, "$(P)$(R)CalcPressure0")
+}
+
+record(calcout,"$(P)$(R)Pressure0N")
+{
+  field(DESC, "Pressure value from lbf to N")
+  field(INPA, "$(P)$(R)PressureValue0_RBV NPP")
+  field(INPB, "4.4492")
+  field(EGU , "N")
+  field(CALC, "A*B")
+  field(PREC, "4")
+  field(SCAN, ".1 second")
+}
+
+record(calcout,"$(P)$(R)Pressure0gf")
+{
+  field(DESC, "Pressure value from lbf to gf")
+  field(INPA, "$(P)$(R)PressureValue0_RBV NPP")
+  field(INPB, "453.5923")
+  field(EGU , "gf")
+  field(CALC, "A*B")
+  field(PREC, "4")
+  field(SCAN, ".1 second")
+}
+
+record(calc,"$(P)$(R)CalcPressure0")
+{
+  field(DESC, "Calculated pressure value")
+  field(INPA, "$(P)$(R)PressureValue0_RBV NPP")
+  field(INPB, "0")
+  field(INPD, "$(P)$(R)Direction0")
+  field(EGU , "lbf")
+  field(CALC, "C:=A-B;(D>0)?C*(-1):C")
+  field(PREC, "3")
+}
+
+record(calcout,"$(P)$(R)CalcPressure0N")
+{
+  field(DESC, "Calculated pressure value from lbf to N")
+  field(INPA, "$(P)$(R)CalcPressure0 NPP")
+  field(INPB, "4.4492")
+  field(EGU , "N")
+  field(CALC, "A*B")
+  field(PREC, "4")
+  field(SCAN, ".1 second")
+}
+
+record(calcout,"$(P)$(R)CalcPressure0gf")
+{
+  field(DESC, "Calculated pressure value from lbf to gf")
+  field(INPA, "$(P)$(R)CalcPressure0 NPP")
+  field(INPB, "453.5923")
+  field(EGU , "gf")
+  field(CALC, "A*B")
+  field(PREC, "4")
+  field(SCAN, ".1 second")
+}
+
+record(mbbo,"$(P)$(R)Direction0")
+{
+   field(ZRST, "Compression")
+   field(ONST, "Tension")
+   field(ZRVL, "0")
+   field(ONVL, "1")
+   field(FLNK, "$(P)$(R)CalcPressure0")
+}
+
+###################################################################
+#  This record is used to get normal data                         #
+###################################################################
+record(ao, "$(P)$(R)SerialNumber1")
+{
+    field(DESC, "Get Serial Number1")
+    field(DTYP, "asynFloat64")
+    field(OUT,  "@asyn($(PORT),$(ADDR))SERIAL_NUMBER_1")
+}
+record(ai, "$(P)$(R)SerialNumber1_RBV")
+{
+    field(DESC, "Get Serial Number1")
+    field(PINI, "1")
+    field(DTYP, "asynFloat64")
+    field(EGU, "FUTEK2")
+#    field(PREC, "3")
+    field(INP,  "@asyn($(PORT),$(ADDR))SERIAL_NUMBER_1")
+    field(SCAN, "I/O Intr")
+#    field(SCAN, "1 second")
+}
+
+
+record(ao, "$(P)$(R)NormalData1")
+{
+    field(DESC, "Get the latest ADC value") 
+    field(DTYP, "asynFloat64")
+    field(OUT,  "@asyn($(PORT),$(ADDR))NORMAL_DATA_1")
+    field(PREC, "3")
+}
+record(ai, "$(P)$(R)NormalData1_RBV")
+{
+    field(DESC, "Get the latest ADC value") 
+    field(PINI, "1")
+    field(DTYP, "asynFloat64")
+    field(EGU, "g")
+    field(INP,  "@asyn($(PORT),$(ADDR))NORMAL_DATA_1")
+    field(PREC, "3")
+    field(SCAN, "I/O Intr")
+#    field(SCAN, "1 second")
+}
+
+###################################################################
+##  This record is used to get offset value                       #
+####################################################################
+record(ao, "$(P)$(R)OffsetValue1")
+{
+   field(PINI, "1")
+   field(DTYP, "asynFloat64")
+   field(OUT,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))OFFSET_VALUE_1")
+   field(PREC, "3")
+}
+
+record(ai, "$(P)$(R)OffsetValue1_RBV")
+{
+   field(PINI, "1")
+   field(DTYP, "asynFloat64")
+   field(INP,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))OFFSET_VALUE_1")
+   field(PREC, "3")
+   field(SCAN, "I/O Intr")
+}
+
+record(ao, "$(P)$(R)FullscaleValue1")
+{
+   field(PINI, "1")
+   field(DTYP, "asynFloat64")
+   field(OUT,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))FULLSCALE_VALUE_1")
+   field(PREC, "3")
+}
+
+record(ai, "$(P)$(R)FullscaleValue1_RBV")
+{
+   field(PINI, "1")
+   field(DTYP, "asynFloat64")
+   field(INP,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))FULLSCALE_VALUE_1")
+   field(PREC, "3")
+   field(SCAN, "I/O Intr")
+}
+
+record(ao, "$(P)$(R)FullscaleLoad1")
+{
+   field(PINI, "1")
+   field(DTYP, "asynFloat64")
+   field(OUT,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))FULLSCALE_LOAD_1")
+   field(PREC, "3")
+}
+
+record(ai, "$(P)$(R)FullscaleLoad1_RBV")
+{
+   field(PINI, "1")
+   field(DTYP, "asynFloat64")
+   field(INP,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))FULLSCALE_LOAD_1")
+   field(PREC, "3")
+   field(SCAN, "I/O Intr")
+}
+
+record(ao, "$(P)$(R)DecimalPoint1")
+{
+   field(PINI, "1")
+   field(DTYP, "asynFloat64")
+   field(OUT,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))DECIMAL_POINT_1")
+   field(PREC, "3")
+}
+
+record(ai, "$(P)$(R)DecimalPoint1_RBV")
+{
+   field(PINI, "1")
+   field(DTYP, "asynFloat64")
+   field(INP,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))DECIMAL_POINT_1")
+   field(PREC, "3")
+   field(SCAN, "I/O Intr")
+}
+
+record(ai, "$(P)$(R)PressureValue1_RBV")
+{
+#   field(PINI, "1")
+   field(DTYP, "asynFloat64")
+   field(INP,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))PRESSURE_1")
+   field(PREC, "3")
+   field(EGU , "lbf")
+   field(SCAN, "I/O Intr")
+}
+record(calcout,"$(P)$(R)Pressure1N")
+{
+  field(DESC, "Pressure value from lbf to N")
+  field(INPA, "$(P)$(R)PressureValue1_RBV NPP")
+  field(INPB, "4.4492")
+  field(EGU , "N")
+  field(CALC, "A*B")
+  field(PREC, "4")
+  field(SCAN, ".1 second")
+}
+record(calcout,"$(P)$(R)Pressure1gf")
+{
+  field(DESC, "Pressure value from lbf to gf")
+  field(INPA, "$(P)$(R)PressureValue1_RBV NPP")
+  field(INPB, "453.5923")
+  field(EGU , "gf")
+  field(CALC, "A*B")
+  field(PREC, "4")
+  field(SCAN, ".1 second")
+}
+
+record(calc,"$(P)$(R)CalcPressure1")
+{
+  field(DESC, "Calculated pressure value")
+  field(INPA, "$(P)$(R)PressureValue1_RBV NPP")
+  field(INPB, "0")
+  field(INPD, "$(P)$(R)Direction1")
+  field(EGU , "lbf")
+  field(CALC, "C:=A-B;(D>0)?C*(-1):C")
+  field(PREC, "3")
+  field(SCAN, ".1 second")
+}
+
+record(calcout,"$(P)$(R)CalcPressure1N")
+{
+  field(DESC, "Calculated pressure value from lbf to N")
+  field(INPA, "$(P)$(R)CalcPressure1 NPP")
+  field(INPB, "4.4492")
+  field(EGU , "N")
+  field(CALC, "A*B")
+  field(PREC, "4")
+  field(SCAN, ".1 second")
+}
+
+record(calcout,"$(P)$(R)CalcPressure1gf")
+{
+  field(DESC, "Calculated pressure value from lbf to gf")
+  field(INPA, "$(P)$(R)CalcPressure1 NPP")
+  field(INPB, "453.5923")
+  field(EGU , "gf")
+  field(CALC, "A*B")
+  field(PREC, "4")
+  field(SCAN, ".1 second")
+}
+
+record(mbbo,"$(P)$(R)Direction1")
+{
+   field(ZRST, "Compression")
+   field(ONST, "Tension")
+   field(ZRVL, "0")
+   field(ONVL, "1")
+   field(FLNK, "$(P)$(R)CalcPressure1")
+}
+###################################################################
+#  This record is used to get normal data                         #
+###################################################################
+record(ao, "$(P)$(R)SerialNumber2")
+{
+    field(DESC, "Get Serial Number2")
+    field(DTYP, "asynFloat64")
+    field(OUT,  "@asyn($(PORT),$(ADDR))SERIAL_NUMBER_2")
+}
+record(ai, "$(P)$(R)SerialNumber2_RBV")
+{
+    field(DESC, "Get Serial Number2")
+    field(PINI, "1")
+    field(DTYP, "asynFloat64")
+    field(EGU, "FUTEK3")
+#    field(PREC, "3")
+    field(INP,  "@asyn($(PORT),$(ADDR))SERIAL_NUMBER_2")
+    field(SCAN, "I/O Intr")
+#    field(SCAN, "1 second")
+}
+
+record(ao, "$(P)$(R)NormalData2")
+{
+    field(DESC, "Get the latest ADC value") 
+    field(DTYP, "asynFloat64")
+    field(OUT,  "@asyn($(PORT),$(ADDR))NORMAL_DATA_2")
+    field(PREC, "3")
+}
+record(ai, "$(P)$(R)NormalData2_RBV")
+{
+    field(DESC, "Get the latest ADC value") 
+    field(PINI, "1")
+    field(DTYP, "asynFloat64")
+    field(INP,  "@asyn($(PORT),$(ADDR))NORMAL_DATA_2")
+    field(EGU, "g")
+    field(PREC, "3")
+    field(SCAN, "I/O Intr")
+#    field(SCAN, "1 second")
+}
+
+###################################################################
+##  This record is used to get offset value                       #
+####################################################################
+record(ao, "$(P)$(R)OffsetValue2")
+{
+   field(PINI, "1")
+   field(DTYP, "asynFloat64")
+   field(OUT,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))OFFSET_VALUE_2")
+   field(PREC, "3")
+}
+
+record(ai, "$(P)$(R)OffsetValue2_RBV")
+{
+   field(PINI, "1")
+   field(DTYP, "asynFloat64")
+   field(INP,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))OFFSET_VALUE_2")
+   field(PREC, "3")
+   field(SCAN, "I/O Intr")
+}
+
+record(ao, "$(P)$(R)FullscaleValue2")
+{
+   field(PINI, "1")
+   field(DTYP, "asynFloat64")
+   field(OUT,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))FULLSCALE_VALUE_2")
+   field(PREC, "3")
+}
+
+record(ai, "$(P)$(R)FullscaleValue2_RBV")
+{
+   field(PINI, "1")
+   field(DTYP, "asynFloat64")
+   field(INP,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))FULLSCALE_VALUE_2")
+   field(PREC, "3")
+   field(SCAN, "I/O Intr")
+}
+
+record(ao, "$(P)$(R)FullscaleLoad2")
+{
+   field(PINI, "1")
+   field(DTYP, "asynFloat64")
+   field(OUT,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))FULLSCALE_LOAD_2")
+   field(PREC, "3")
+}
+
+record(ai, "$(P)$(R)FullscaleLoad2_RBV")
+{
+   field(PINI, "1")
+   field(DTYP, "asynFloat64")
+   field(INP,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))FULLSCALE_LOAD_2")
+   field(PREC, "3")
+   field(SCAN, "I/O Intr")
+}
+
+record(ao, "$(P)$(R)DecimalPoint2")
+{
+   field(PINI, "1")
+   field(DTYP, "asynFloat64")
+   field(OUT,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))DECIMAL_POINT_2")
+   field(PREC, "3")
+}
+
+record(ai, "$(P)$(R)DecimalPoint2_RBV")
+{
+   field(PINI, "1")
+   field(DTYP, "asynFloat64")
+   field(INP,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))DECIMAL_POINT_2")
+   field(PREC, "3")
+   field(SCAN, "I/O Intr")
+}
+
+record(ai, "$(P)$(R)PressureValue2_RBV")
+{
+#   field(PINI, "1")
+   field(DTYP, "asynFloat64")
+   field(INP,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))PRESSURE_2")
+   field(PREC, "3")
+   field(SCAN, "I/O Intr")
+}
+record(calcout,"$(P)$(R)Pressure2N")
+{
+  field(DESC, "Pressure value from lbf to N")
+  field(INPA, "$(P)$(R)PressureValue2_RBV NPP")
+  field(INPB, "4.4492")
+  field(EGU , "N")
+  field(CALC, "A*B")
+  field(PREC, "4")
+  field(SCAN, ".1 second")
+}
+record(calcout,"$(P)$(R)Pressure2gf")
+{
+  field(DESC, "Pressure value from lbf to gf")
+  field(INPA, "$(P)$(R)PressureValue2_RBV NPP")
+  field(INPB, "453.5923")
+  field(EGU , "gf")
+  field(CALC, "A*B")
+  field(PREC, "4")
+  field(SCAN, ".1 second")
+}
+
+record(calc,"$(P)$(R)CalcPressure2")
+{
+  field(DESC, "Calculated pressure value")
+  field(INPA, "$(P)$(R)PressureValue2_RBV NPP")
+  field(INPB, "0")
+  field(INPD, "$(P)$(R)Direction2")
+  field(EGU , "lbf")
+  field(CALC, "C:=A-B;(D>0)?C*(-1):C")
+  field(PREC, "3")
+  field(SCAN, ".1 second")
+}
+
+record(calcout,"$(P)$(R)CalcPressure2N")
+{
+  field(DESC, "Calculated pressure value from lbf to N")
+  field(INPA, "$(P)$(R)CalcPressure2 NPP")
+  field(INPB, "4.4492")
+  field(EGU , "N")
+  field(CALC, "A*B")
+  field(PREC, "4")
+  field(SCAN, ".1 second")
+}
+
+record(calcout,"$(P)$(R)CalcPressure2gf")
+{
+  field(DESC, "Calculated pressure value from lbf to gf")
+  field(INPA, "$(P)$(R)CalcPressure2 NPP")
+  field(INPB, "453.5923")
+  field(EGU , "gf")
+  field(CALC, "A*B")
+  field(PREC, "4")
+  field(SCAN, ".1 second")
+}
+record(mbbo,"$(P)$(R)Direction2")
+{
+   field(ZRST, "Compression")
+   field(ONST, "Tension")
+   field(ZRVL, "0")
+   field(ONVL, "1")
+   field(FLNK, "$(P)$(R)CalcPressure2")
+}
+
+
+
+
+###################################################################
+#  This record is used to get normal data                         #
+###################################################################
+record(ao, "$(P)$(R)SerialNumber3")
+{
+    field(DESC, "Get Serial Number3")
+    field(DTYP, "asynFloat64")
+    field(OUT,  "@asyn($(PORT),$(ADDR))SERIAL_NUMBER_3")
+}
+record(ai, "$(P)$(R)SerialNumber3_RBV")
+{
+    field(DESC, "Get Serial Number3")
+    field(PINI, "1")
+    field(DTYP, "asynFloat64")
+    field(EGU, "FUTEK4")
+#    field(PREC, "3")
+    field(INP,  "@asyn($(PORT),$(ADDR))SERIAL_NUMBER_3")
+    field(SCAN, "I/O Intr")
+#    field(SCAN, "1 second")
+}
+
+record(ao, "$(P)$(R)NormalData3")
+{
+    field(DESC, "Get the latest ADC value") 
+    field(DTYP, "asynFloat64")
+    field(OUT,  "@asyn($(PORT),$(ADDR))NORMAL_DATA_3")
+    field(PREC, "3")
+}
+record(ai, "$(P)$(R)NormalData3_RBV")
+{
+    field(DESC, "Get the latest ADC value") 
+    field(PINI, "1")
+    field(DTYP, "asynFloat64")
+    field(INP,  "@asyn($(PORT),$(ADDR))NORMAL_DATA_3")
+    field(EGU, "g")
+    field(PREC, "3")
+    field(SCAN, "I/O Intr")
+#    field(SCAN, "1 second")
+}
+
+###################################################################
+##  This record is used to get offset value                       #
+####################################################################
+record(ao, "$(P)$(R)OffsetValue3")
+{
+   field(PINI, "1")
+   field(DTYP, "asynFloat64")
+   field(OUT,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))OFFSET_VALUE_3")
+   field(PREC, "3")
+}
+
+record(ai, "$(P)$(R)OffsetValue3_RBV")
+{
+   field(PINI, "1")
+   field(DTYP, "asynFloat64")
+   field(INP,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))OFFSET_VALUE_3")
+   field(PREC, "3")
+   field(SCAN, "I/O Intr")
+}
+
+record(ao, "$(P)$(R)FullscaleValue3")
+{
+   field(PINI, "1")
+   field(DTYP, "asynFloat64")
+   field(OUT,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))FULLSCALE_VALUE_3")
+   field(PREC, "3")
+}
+
+record(ai, "$(P)$(R)FullscaleValue3_RBV")
+{
+   field(PINI, "1")
+   field(DTYP, "asynFloat64")
+   field(INP,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))FULLSCALE_VALUE_3")
+   field(PREC, "3")
+   field(SCAN, "I/O Intr")
+}
+
+record(ao, "$(P)$(R)FullscaleLoad3")
+{
+   field(PINI, "1")
+   field(DTYP, "asynFloat64")
+   field(OUT,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))FULLSCALE_LOAD_3")
+   field(PREC, "3")
+}
+
+record(ai, "$(P)$(R)FullscaleLoad3_RBV")
+{
+   field(PINI, "1")
+   field(DTYP, "asynFloat64")
+   field(INP,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))FULLSCALE_LOAD_3")
+   field(PREC, "3")
+   field(SCAN, "I/O Intr")
+}
+
+record(ao, "$(P)$(R)DecimalPoint3")
+{
+   field(PINI, "1")
+   field(DTYP, "asynFloat64")
+   field(OUT,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))DECIMAL_POINT_3")
+   field(PREC, "3")
+}
+
+record(ai, "$(P)$(R)DecimalPoint3_RBV")
+{
+   field(PINI, "1")
+   field(DTYP, "asynFloat64")
+   field(INP,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))DECIMAL_POINT_3")
+   field(PREC, "3")
+   field(SCAN, "I/O Intr")
+}
+record(ai, "$(P)$(R)PressureValue3_RBV")
+{
+#   field(PINI, "1")
+   field(DTYP, "asynFloat64")
+   field(INP,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))PRESSURE_3")
+   field(PREC, "3")
+   field(SCAN, "I/O Intr")
+}
+record(calcout,"$(P)$(R)Pressure3N")
+{
+  field(DESC, "Pressure value from lbf to N")
+  field(INPA, "$(P)$(R)PressureValue3_RBV NPP")
+  field(INPB, "4.4492")
+  field(EGU , "N")
+  field(CALC, "A*B")
+  field(PREC, "4")
+  field(SCAN, ".1 second")
+}
+record(calcout,"$(P)$(R)Pressure3gf")
+{
+  field(DESC, "Pressure value from lbf to gf")
+  field(INPA, "$(P)$(R)PressureValue3_RBV NPP")
+  field(INPB, "453.5923")
+  field(EGU , "gf")
+  field(CALC, "A*B")
+  field(PREC, "4")
+  field(SCAN, ".1 second")
+}
+
+record(calc,"$(P)$(R)CalcPressure3")
+{
+  field(DESC, "Calculated pressure value")
+  field(INPA, "$(P)$(R)PressureValue3_RBV NPP")
+  field(INPB, "0")
+  field(INPD, "$(P)$(R)Direction3")
+  field(EGU , "lbf")
+  field(CALC, "C:=A-B;(D>0)?C*(-1):C")
+  field(PREC, "3")
+  field(SCAN, ".1 second")
+}
+
+record(calcout,"$(P)$(R)CalcPressure3N")
+{
+  field(DESC, "Calculated pressure value from lbf to N")
+  field(INPA, "$(P)$(R)CalcPressure3 NPP")
+  field(INPB, "4.4492")
+  field(EGU , "N")
+  field(CALC, "A*B")
+  field(PREC, "4")
+  field(SCAN, ".1 second")
+}
+
+record(calcout,"$(P)$(R)CalcPressure3gf")
+{
+  field(DESC, "Calculated pressure value from lbf to gf")
+  field(INPA, "$(P)$(R)CalcPressure3 NPP")
+  field(INPB, "453.5923")
+  field(EGU , "gf")
+  field(CALC, "A*B")
+  field(PREC, "4")
+  field(SCAN, ".1 second")
+}
+record(mbbo,"$(P)$(R)Direction3")
+{
+   field(ZRST, "Compression")
+   field(ONST, "Tension")
+   field(ZRVL, "0")
+   field(ONVL, "1")
+   field(FLNK, "$(P)$(R)CalcPressure3")
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+###################################################################
+#  This record is used to get normal data                         #
+###################################################################
+record(ao, "$(P)$(R)SerialNumber4")
+{
+    field(DESC, "Get Serial Number4")
+    field(DTYP, "asynFloat64")
+    field(OUT,  "@asyn($(PORT),$(ADDR))SERIAL_NUMBER_4")
+}
+record(ai, "$(P)$(R)SerialNumber4_RBV")
+{
+    field(DESC, "Get Serial Number4")
+    field(PINI, "1")
+    field(DTYP, "asynFloat64")
+    field(EGU, "FUTEK5")
+#    field(PREC, "3")
+    field(INP,  "@asyn($(PORT),$(ADDR))SERIAL_NUMBER_4")
+    field(SCAN, "I/O Intr")
+#    field(SCAN, "1 second")
+}    
+record(ao, "$(P)$(R)NormalData4")
+{
+    field(DESC, "Get the latest ADC value") 
+    field(DTYP, "asynFloat64")
+    field(OUT,  "@asyn($(PORT),$(ADDR))NORMAL_DATA_4")
+    field(PREC, "3")
+}
+record(ai, "$(P)$(R)NormalData4_RBV")
+{
+    field(DESC, "Get the latest ADC value") 
+    field(PINI, "1")
+    field(DTYP, "asynFloat64")
+    field(INP,  "@asyn($(PORT),$(ADDR))NORMAL_DATA_4")
+    field(EGU, "g")
+    field(PREC, "3")
+    field(SCAN, "I/O Intr")
+#    field(SCAN, "1 second")
+}
+
+###################################################################
+##  This record is used to get offset value                       #
+####################################################################
+record(ao, "$(P)$(R)OffsetValue4")
+{
+   field(PINI, "1")
+   field(DTYP, "asynFloat64")
+   field(OUT,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))OFFSET_VALUE_4")
+   field(PREC, "3")
+}
+
+record(ai, "$(P)$(R)OffsetValue4_RBV")
+{
+   field(PINI, "1")
+   field(DTYP, "asynFloat64")
+   field(INP,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))OFFSET_VALUE_4")
+   field(PREC, "3")
+   field(SCAN, "I/O Intr")
+}
+
+record(ao, "$(P)$(R)FullscaleValue4")
+{
+   field(PINI, "1")
+   field(DTYP, "asynFloat64")
+   field(OUT,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))FULLSCALE_VALUE_4")
+   field(PREC, "3")
+}
+
+record(ai, "$(P)$(R)FullscaleValue4_RBV")
+{
+   field(PINI, "1")
+   field(DTYP, "asynFloat64")
+   field(INP,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))FULLSCALE_VALUE_4")
+   field(PREC, "3")
+   field(SCAN, "I/O Intr")
+}
+
+record(ao, "$(P)$(R)FullscaleLoad4")
+{
+   field(PINI, "1")
+   field(DTYP, "asynFloat64")
+   field(OUT,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))FULLSCALE_LOAD_4")
+   field(PREC, "3")
+}
+
+record(ai, "$(P)$(R)FullscaleLoad4_RBV")
+{
+   field(PINI, "1")
+   field(DTYP, "asynFloat64")
+   field(INP,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))FULLSCALE_LOAD_4")
+   field(PREC, "3")
+   field(SCAN, "I/O Intr")
+}
+
+record(ao, "$(P)$(R)DecimalPoint4")
+{
+   field(PINI, "1")
+   field(DTYP, "asynFloat64")
+   field(OUT,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))DECIMAL_POINT_4")
+   field(PREC, "3")
+}
+
+record(ai, "$(P)$(R)DecimalPoint4_RBV")
+{
+   field(PINI, "1")
+   field(DTYP, "asynFloat64")
+   field(INP,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))DECIMAL_POINT_4")
+   field(PREC, "3")
+   field(SCAN, "I/O Intr")
+}
+record(ai, "$(P)$(R)PressureValue4_RBV")
+{
+#   field(PINI, "1")
+   field(DTYP, "asynFloat64")
+   field(INP,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))PRESSURE_4")
+   field(PREC, "3")
+   field(SCAN, "I/O Intr")
+}
+
+record(calcout,"$(P)$(R)Pressure4N")
+{
+  field(DESC, "Pressure value from lbf to N")
+  field(INPA, "$(P)$(R)PressureValue4_RBV NPP")
+  field(INPB, "4.4492")
+  field(EGU , "N")
+  field(CALC, "A*B")
+  field(PREC, "4")
+  field(SCAN, ".1 second")
+}
+record(calcout,"$(P)$(R)Pressure4gf")
+{
+  field(DESC, "Pressure value from lbf to gf")
+  field(INPA, "$(P)$(R)PressureValue4_RBV NPP")
+  field(INPB, "453.5923")
+  field(EGU , "gf")
+  field(CALC, "A*B")
+  field(PREC, "4")
+  field(SCAN, ".1 second")
+}
+
+record(calc,"$(P)$(R)CalcPressure4")
+{
+  field(DESC, "Calculated pressure value")
+  field(INPA, "$(P)$(R)PressureValue4_RBV NPP")
+  field(INPB, "0")
+  field(INPD, "$(P)$(R)Direction4")
+  field(EGU , "lbf")
+  field(CALC, "C:=A-B;(D>0)?C*(-1):C")
+  field(PREC, "3")
+  field(SCAN, ".1 second")
+}
+
+record(calcout,"$(P)$(R)CalcPressure4N")
+{
+  field(DESC, "Calculated pressure value from lbf to N")
+  field(INPA, "$(P)$(R)CalcPressure4 NPP")
+  field(INPB, "4.4492")
+  field(EGU , "N")
+  field(CALC, "A*B")
+  field(PREC, "4")
+  field(SCAN, ".1 second")
+}
+
+record(calcout,"$(P)$(R)CalcPressure4gf")
+{
+  field(DESC, "Calculated pressure value from lbf to gf")
+  field(INPA, "$(P)$(R)CalcPressure4 NPP")
+  field(INPB, "453.5923")
+  field(EGU , "gf")
+  field(CALC, "A*B")
+  field(PREC, "4")
+  field(SCAN, ".1 second")
+}
+record(mbbo,"$(P)$(R)Direction4")
+{
+   field(ZRST, "Compression")
+   field(ONST, "Tension")
+   field(ZRVL, "0")
+   field(ONVL, "1")
+   field(FLNK, "$(P)$(R)CalcPressure4")
+}
+
+
+
+
+

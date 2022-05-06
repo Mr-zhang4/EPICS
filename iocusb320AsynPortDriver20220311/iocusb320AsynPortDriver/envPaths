@@ -1,0 +1,6 @@
+epicsEnvSet("IOC","iocusb320AsynPortDriver")
+epicsEnvSet("TOP","/opt/epics/support/asyn")
+epicsEnvSet("SUPPORT","/opt/epics/support")
+epicsEnvSet("IPAC","/opt/epics/support/ipac")
+epicsEnvSet("SNCSEQ","/opt/epics/support/seq")
+epicsEnvSet("EPICS_BASE","/opt/epics/base")

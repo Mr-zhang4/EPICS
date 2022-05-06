@@ -1,0 +1,15 @@
+startup = "/opt/epics/support/asyn/iocBoot/iocusb320AsynPortDriver"
+putenv("IOC=iocusb320AsynPortDriver")
+top = "/opt/epics/support/asyn"
+putenv("TOP=/opt/epics/support/asyn")
+topbin = "/opt/epics/support/asyn/bin/linux-x86_64"
+support = "/opt/epics/support"
+putenv("SUPPORT=/opt/epics/support")
+ipac = "/opt/epics/support/ipac"
+putenv("IPAC=/opt/epics/support/ipac")
+sncseq = "/opt/epics/support/seq"
+putenv("SNCSEQ=/opt/epics/support/seq")
+sncseqbin = "/opt/epics/support/seq/bin/linux-x86_64"
+epics_base = "/opt/epics/base"
+putenv("EPICS_BASE=/opt/epics/base")
+epics_basebin = "/opt/epics/base/bin/linux-x86_64"
